@@ -59,6 +59,11 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         saveToLocalStorage("menu", updatedFavs)
     }
 
+    const deleteOrders = () => {
+        setOrder([])
+        saveToLocalStorage("order", [])
+    }
+
     const reset = () => {
         setmenu(defaultMenus)
     }
@@ -77,7 +82,7 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     }, [])
 
     return (
-        <MenuContext.Provider value={{ menu, addMenu, deleteMenu, order, addOrder }}>
+        <MenuContext.Provider value={{ menu, addMenu, deleteMenu, order, addOrder, deleteOrders }}>
             <div>{children}</div>
         </MenuContext.Provider>
     )
