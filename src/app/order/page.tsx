@@ -1,7 +1,7 @@
 'use client'
 
 import { MenuContext } from '@/context/MenuContext'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const tables = ["1", "2", "3"]
 
@@ -9,7 +9,7 @@ const quantity = ["1", "2", "3"]
 
 export default function Order() {
 
-  const { menu, addOrder } = useContext(MenuContext)
+  const { menu, addOrder, reset } = useContext(MenuContext)
 
   const [order, setOrder] = useState({
     menuId: "",
@@ -46,6 +46,11 @@ export default function Order() {
     addOrder(order)
     resetOrder()
   }
+
+  useEffect(() => {
+    if (reset) resetOrder()
+  }, [reset])
+
 
   return (
     <div className='w-full'>

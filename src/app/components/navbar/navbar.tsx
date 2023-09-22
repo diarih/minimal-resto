@@ -1,13 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { usePathname } from 'next/navigation'
+import { MenuContext } from '@/context/MenuContext'
 
 export default function Navbar() {
 
     const pathname = usePathname()
-
-    const isHome = pathname === '/'
+    const { reset } = useContext(MenuContext)
 
     return (
         <div className='flex justify-between'>
@@ -18,7 +18,7 @@ export default function Navbar() {
                 <a href='/kasir' className={`tab ${pathname === '/kasir' && 'tab-active'}`}>Kasir</a>
             </div>
             <div>
-                <button className="btn btn-error">Reset</button>
+                <button onClick={() => reset()} className="btn btn-error">Reset</button>
             </div>
         </div>
     )

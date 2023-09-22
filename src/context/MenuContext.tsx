@@ -66,6 +66,8 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
 
     const reset = () => {
         setmenu(defaultMenus)
+        saveToLocalStorage("menu", defaultMenus)
+        deleteOrders()
     }
 
     useEffect(() => {
@@ -82,7 +84,7 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     }, [])
 
     return (
-        <MenuContext.Provider value={{ menu, addMenu, deleteMenu, order, addOrder, deleteOrders }}>
+        <MenuContext.Provider value={{ menu, addMenu, deleteMenu, order, addOrder, deleteOrders, reset }}>
             <div>{children}</div>
         </MenuContext.Provider>
     )

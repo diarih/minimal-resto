@@ -2,11 +2,11 @@
 
 import { MenuContext } from '@/context/MenuContext'
 import { mergeArrayDuplicates } from '@/lib/helpers/mergeDuplicateArr'
-import React, { useContext, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 
 export default function Kasir() {
 
-  const { order, menu, deleteOrders } = useContext(MenuContext)
+  const { order, menu, deleteOrders, reset } = useContext(MenuContext)
 
   const [table, selectTable] = useState("")
   const [print, setPrint] = useState<any[]>([])
@@ -52,6 +52,11 @@ export default function Kasir() {
      onChange("")
   }
 
+  useEffect(() => {
+    if(reset) onChange("")
+  }, [reset])
+  
+
   return (
     <div>
       <div className='flex items-end justify-between gap-3 mb-6'>
@@ -60,7 +65,7 @@ export default function Kasir() {
             <label className="label">
               <span className="label-text">Table</span>
             </label>
-            <select value={order.menuId} onChange={onChange} className="select select-bordered">
+            <select value={table} onChange={onChange} className="select select-bordered">
               <option value="">Choose Table</option>
               {dataTable.map((e: any) => {
                 return <option key={e} value={e}>Table #{e}</option>
