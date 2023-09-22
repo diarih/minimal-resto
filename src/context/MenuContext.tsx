@@ -24,9 +24,15 @@ export const MenuContext = createContext<any>({
     deleteMenu: () => { }
 });
 
+export const OrderContext = createContext<any>({
+    order: [],
+    addOrder: () => { },
+});
+
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [menu, setmenu] = useState<any>([])
+    const [order, setOrder] = useState<any>([])
 
     const addMenu = (newMenu: any) => {
         const id = Math.floor(Math.random() * 1000);
@@ -37,6 +43,13 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         setmenu((prev: any) => {
             saveToLocalStorage("menu", [...prev, food])
             return [...prev, food]
+        })
+    }
+
+    const addOrder = (newOrder: any) => {
+        setOrder((prev: any) => {
+            saveToLocalStorage("order", [...prev, newOrder])
+            return [...prev, newOrder]
         })
     }
 
@@ -57,10 +70,14 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
             saveToLocalStorage("menu", defaultMenus)
             return defaultMenus
         })
+        setOrder((prev: any) => {
+            const storage = loadFromLocalStorage("order")
+            return [...prev, ...storage]
+        })
     }, [])
 
     return (
-        <MenuContext.Provider value={{ menu, addMenu, deleteMenu }}>
+        <MenuContext.Provider value={{ menu, addMenu, deleteMenu, order, addOrder }}>
             <div>{children}</div>
         </MenuContext.Provider>
     )
