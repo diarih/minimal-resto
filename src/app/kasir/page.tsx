@@ -13,6 +13,7 @@ export default function Kasir() {
 
   const onChange = (e: ChangeEvent<HTMLSelectElement> | string) => {
     let val = ""
+    setPrint([])
     if (typeof e === "string") {
       val = e
     } else {
