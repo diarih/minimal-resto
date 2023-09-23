@@ -2,18 +2,25 @@
 
 import { MenuContext } from '@/context/MenuContext'
 import { mergeArrayDuplicates } from '@/lib/helpers/mergeDuplicateArr'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react'
 
 export default function Kasir() {
 
   const { order, menu, deleteOrders, reset } = useContext(MenuContext)
 
   const [table, selectTable] = useState("")
-  const [print, setPrint] = useState<any[]>([])
+  const [print, setPrint] = useState<Print[]>([])
 
-  const onChange = (e: any) => {
-    const val = e?.target?.value || ""
-    if (!val) setPrint([])
+  const onChange = (e: ChangeEvent<HTMLSelectElement> | string) => {
+    // const val = e?.target?.value || ""
+    // if (!val) setPrint([])
+    // selectTable(val)
+    let val = ""
+    if (typeof e === "string") {
+      val = e
+    } else {
+      val = e.target.value
+    }
     selectTable(val)
   }
 
@@ -23,8 +30,8 @@ export default function Kasir() {
   }
 
   const orderMenu = () => {
-    const res = order?.map((e: any) => {
-      const [menuFilter] = menu.filter((x: any) => x.id == e.menuId)
+    const res = order?.map((e) => {
+      const [menuFilter] = menu.filter((x) => x.id.toString() == e.menuId)
       const { menuId, ...res } = e
       return {
         ...res,
@@ -43,19 +50,23 @@ export default function Kasir() {
     [order, menu])
 
   const onPrint = () => {
-    const filteredOrder = dataOrder.filter((e: any) => e.tableId === table)
+    const filteredOrder = dataOrder.filter((e) => e.tableId === table)
     setPrint(filteredOrder)
   }
 
   const onDeleteOrders = () => {
-     deleteOrders()
-     onChange("")
+    deleteOrders()
+    onChange("")
+    setPrint([])
   }
 
   useEffect(() => {
-    if(reset) onChange("")
+    onChange("")
   }, [reset])
-  
+
+
+  console.log(dataTable)
+
 
   return (
     <div>
@@ -67,7 +78,7 @@ export default function Kasir() {
             </label>
             <select value={table} onChange={onChange} className="select select-bordered">
               <option value="">Choose Table</option>
-              {dataTable.map((e: any) => {
+              {dataTable.map((e) => {
                 return <option key={e} value={e}>Table #{e}</option>
               })}
             </select>
@@ -91,7 +102,7 @@ export default function Kasir() {
                   </tr>
                 </thead>
                 <tbody>
-                  {print.map((e: any, i: number) => {
+                  {print.map((e, i: number) => {
                     return (
                       <tr key={i} className="hover">
                         <td width={'20%'}>{e.qty}</td>

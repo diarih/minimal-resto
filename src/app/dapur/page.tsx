@@ -8,8 +8,8 @@ export default function Dapur() {
   const { order, menu } = useContext(MenuContext)
 
   const orderMenu = () => {
-    const res = order?.map((e: any) => {
-      const [menuFilter] = menu.filter((x: any) => x.id == e.menuId)
+    const res = order?.map((e) => {
+      const [menuFilter] = menu.filter((x) => x.id.toString() == e.menuId)
       const { menuId, ...res } = e
       return {
         ...res,
@@ -26,13 +26,15 @@ export default function Dapur() {
     [menu, order]
   );
 
+  console.log(data)
+
   return (
     <div className="flex">
       <div className="w-1/3 space-y-4">
         <h3 className="font-semibold text-xl leading-none">Meja 1</h3>
         <div className="space-y-1">
           {
-            data?.filter((e: any) => e.tableId === '1').map((x: any, i: number) => {
+            data?.filter((e) => e.tableId === '1').map((x, i: number) => {
               return (
                 <div key={i} className="flex text-sm text-muted-foreground">
                   <div className="w-[30px]">{x.qty}x</div>
@@ -47,7 +49,7 @@ export default function Dapur() {
         <h3 className="font-semibold text-xl leading-none">Meja 2</h3>
         <div className="space-y-1">
           {
-            data?.filter((e: any) => e.tableId === '2').map((x: any, i: number) => {
+            data?.filter((e) => e.tableId === '2').map((x, i: number) => {
               return (
                 <div key={i} className="flex text-sm text-muted-foreground">
                   <div className="w-[30px]">{x.qty}x</div>
@@ -62,7 +64,7 @@ export default function Dapur() {
         <h3 className="font-semibold text-xl leading-none">Meja 3</h3>
         <div className="space-y-1">
           {
-            data?.filter((e: any) => e.tableId === '3').map((x: any, i: number) => {
+            data?.filter((e) => e.tableId === '3').map((x, i: number) => {
               return (
                 <div key={i} className="flex text-sm text-muted-foreground">
                   <div className="w-[30px]">{x.qty}x</div>

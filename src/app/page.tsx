@@ -13,7 +13,7 @@ export default function Home() {
     setName("")
   }
 
-  const onDelete = (id: any) => {
+  const onDelete = (id: string | number) => {
     deleteMenu(id)
   }
 
@@ -42,7 +42,7 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {menu.map((e: any) => {
+              {menu.map((e) => {
                 return (
                   <tr key={e.id} className="hover">
                     <td width={'30%'}>{e.id}</td>

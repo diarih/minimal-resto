@@ -1,6 +1,6 @@
-export function mergeArrayDuplicates(arr: any[]) {
-  const mergedArray = [];
-  const seenValues: any = {};
+export function mergeArrayDuplicates(arr: Order[]) {
+  const mergedArray: string[] = [];
+  const seenValues: Record<string, boolean> = {};
 
   for (const item of arr) {
     if (!seenValues[item.tableId]) {

@@ -17,7 +17,7 @@ export default function Order() {
     qty: 0
   })
 
-  const onChange = (key: string, e: any) => {
+  const onChange = (key: string, e: string | number) => {
     setOrder((prev) => {
       return {
         ...prev,
@@ -48,7 +48,7 @@ export default function Order() {
   }
 
   useEffect(() => {
-    if (reset) resetOrder()
+    resetOrder()
   }, [reset])
 
 
@@ -74,7 +74,7 @@ export default function Order() {
           </label>
           <select value={order.menuId} onChange={(e) => onChange("menuId", e.target.value)} className="select select-bordered">
             <option value="">Pilih Menu</option>
-            {menu.map((e: any) => {
+            {menu.map((e) => {
               return <option key={e.id} value={e.id}>{e.name}</option>
             })}
           </select>
@@ -87,7 +87,7 @@ export default function Order() {
           <select value={order.qty} onChange={(e) => onChange("qty", e.target.value)} className="select select-bordered">
             <option value="">Choose Quantity</option>
             {
-              quantity.map((e: any) => {
+              quantity.map((e) => {
                 return (<option key={e} value={e}>{e}</option>)
               })
             }

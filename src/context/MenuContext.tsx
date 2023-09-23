@@ -5,60 +5,53 @@ import React, { useEffect } from 'react'
 import { createContext, useState } from 'react'
 
 
-const defaultMenus = [
+const defaultMenus: Menu[] = [
     {
         id: 12312,
         name: "Ayam"
     }
 ]
 
-type menuContextType = {
-    favPokemon: any[];
-    addFav: (newFav: any) => void;
-    deleteFav: (id: number | string) => void;
-};
-
-export const MenuContext = createContext<any>({
-    menus: [],
+export const MenuContext = createContext<menuContextType>({
+    menu: [],
     addMenu: () => { },
-    deleteMenu: () => { }
-});
-
-export const OrderContext = createContext<any>({
+    deleteMenu: () => { },
     order: [],
     addOrder: () => { },
+    deleteOrders: () => { },
+    reset: () => { }
 });
 
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [menu, setmenu] = useState<any>([])
-    const [order, setOrder] = useState<any>([])
+    const [menu, setmenu] = useState<Menu[]>([])
+    const [order, setOrder] = useState<Order[]>([])
 
-    const addMenu = (newMenu: any) => {
+    const addMenu = (newMenu: string) => {
         const id = Math.floor(Math.random() * 1000);
         const food = {
             id,
             name: newMenu
         }
-        setmenu((prev: any) => {
+        setmenu((prev) => {
             saveToLocalStorage("menu", [...prev, food])
             return [...prev, food]
         })
     }
 
-    const addOrder = (newOrder: any) => {
-        setOrder((prev: any) => {
+    const addOrder = (newOrder: Order) => {
+        setOrder((prev) => {
             saveToLocalStorage("order", [...prev, newOrder])
             return [...prev, newOrder]
         })
     }
 
     const deleteMenu = (id: number | string) => {
-        const updatedFavs = menu.filter((post: any) => post.id !== id);
+        const updatedFavs = menu.filter((post) => post.id !== id);
         setmenu(updatedFavs);
         saveToLocalStorage("menu", updatedFavs)
     }
-
+ 
     const deleteOrders = () => {
         setOrder([])
         saveToLocalStorage("order", [])
@@ -68,16 +61,17 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
         setmenu(defaultMenus)
         saveToLocalStorage("menu", defaultMenus)
         deleteOrders()
+        return true
     }
 
     useEffect(() => {
-        setmenu((prev: any) => {
+        setmenu((prev) => {
             const menuStorage = loadFromLocalStorage("menu")
             if (menuStorage.length !== 0) return [...prev, ...menuStorage]
             saveToLocalStorage("menu", defaultMenus)
             return defaultMenus
         })
-        setOrder((prev: any) => {
+        setOrder((prev) => {
             const storage = loadFromLocalStorage("order")
             return [...prev, ...storage]
         })
