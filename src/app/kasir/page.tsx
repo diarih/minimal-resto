@@ -12,9 +12,6 @@ export default function Kasir() {
   const [print, setPrint] = useState<Print[]>([])
 
   const onChange = (e: ChangeEvent<HTMLSelectElement> | string) => {
-    // const val = e?.target?.value || ""
-    // if (!val) setPrint([])
-    // selectTable(val)
     let val = ""
     if (typeof e === "string") {
       val = e
