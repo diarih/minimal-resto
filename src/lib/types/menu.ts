@@ -1,24 +1,31 @@
 interface Menu {
-    id: number,
+    id: number
     name: string
 }
 
 interface Order {
-    menuId: string,
-    tableId: string,
+    menuId: string
+    tableId: string
     qty: string | number
 }
 
 interface Print extends Omit<Order, 'menuId'> {
-    menu: Menu;
+    menu: Menu
 }
 
 type menuContextType = {
-    menu: Menu[] | [];
-    addMenu: (newFav: string) => void;
+    menu: Menu[] | []
+    addMenu: (newFav: string) => void
     deleteMenu: (id: number | string) => void;
-    order: Order[] | [],
+    order: Order[] | []
     addOrder: (newOrder: Order) => void
     deleteOrders: () => void
     reset: () => void
 };
+
+interface Toast {
+    show: boolean
+    message: string
+    onClose: () => void
+    duration?: number
+}

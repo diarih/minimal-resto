@@ -64,10 +64,6 @@ export default function Kasir() {
     onChange("")
   }, [reset])
 
-
-  console.log(dataTable)
-
-
   return (
     <div>
       <div className='flex items-end justify-between gap-3 mb-6'>

@@ -1,15 +1,21 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { MenuContext } from '@/context/MenuContext'
 import Link from 'next/link'
+import Toast from '@/app/components/toast/toast'
 
 export default function Navbar() {
 
     const pathname = usePathname()
     const { reset } = useContext(MenuContext)
-    
+    const [toast, setToast] = useState(false)
+
+    const onReset = () => {
+        reset()
+        setToast(true)
+    }
 
     return (
         <div className='flex justify-between'>
@@ -20,8 +26,9 @@ export default function Navbar() {
                 <Link href='/kasir' className={`tab ${pathname === '/kasir' && 'tab-active'}`}>Kasir</Link>
             </div>
             <div>
-                <button onClick={() => reset()} className="btn btn-error">Reset</button>
+                <button onClick={onReset} className="btn btn-error">Reset</button>
             </div>
+            <Toast onClose={() => setToast(false)} show={toast} message='Reset Successfully' />
         </div>
     )
 }

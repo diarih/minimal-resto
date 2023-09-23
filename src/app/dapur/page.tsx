@@ -26,8 +26,6 @@ export default function Dapur() {
     [menu, order]
   );
 
-  console.log(data)
-
   return (
     <div className="flex">
       <div className="w-1/3 space-y-4">
